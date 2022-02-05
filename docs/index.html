@@ -3,12 +3,14 @@
 <html lang="en">
 <head>
     <style>
-        .dataTables_filter{
+        .dataTables_filter {
             margin-bottom: 20px;
         }
-        .navbar-toggler{
+
+        .navbar-toggler {
             visibility: hidden;
         }
+
         .odd {
             background-color: aqua;
         }
@@ -37,8 +39,11 @@
         }
 
         .bg-gray-txt-white {
-            background-color: gray;
+            background-color: #495057;
             color: white;
+        }
+        th {
+            height: 10px;
         }
     </style>
     <meta charset="utf-8">
@@ -47,10 +52,7 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
     <title>Wave Dashboard</title>
-    <span class="checkmark">
-    <div class="checkmark_stem"></div>
-    <div class="checkmark_kick"></div>
-  </span>
+
     <!-- CSS only -->
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
@@ -63,12 +65,14 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="./js/cropped-doughnut-creator.js"></script>
+    <script type="text/javascript" src="./js/index-code-behind.js"></script>
 
 </head>
 <body>
 <header>
     <div class="collapse bg-dark" id="navbarHeader">
         <div class="container" style="visibility: hidden;">
+            <div class="mb-5">&nbsp;</div>
             <div class="row">
                 <div class="col-sm-4 offset-md-1 py-4">
                     <h4 class="text-white">Contact</h4>
@@ -101,14 +105,14 @@
 </header>
 
 <main>
-    <section class="container">
+    <section class="container"><div class="mb-5">&nbsp;</div>
         <div class="row pb-5 mb-5">
             <div class="col-md-12">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="card text-center">
-                                <div class="card-body" >
+                                <div class="card-body">
                                     <div id="sites-chart">
                                     </div>
                                 </div>
@@ -126,7 +130,7 @@
 
                         <div class="col-md-4">
                             <div class="card text-center">
-                                <div class="card-body" >
+                                <div class="card-body">
                                     <div id="cameras-chart">
                                     </div>
                                 </div>
@@ -136,276 +140,58 @@
                 </div>
             </div>
             <div style="clear:both"></div>
-            <div class="mb-5">&nbsp</div>
         </div>
 
-        <table id="example" class="display" width="100%">
+        <table class="display" id="example" width="100%">
             <thead>
-            <tr>
+            <tr style="height: 20px">
+                <th colspan="1" class="bg-gray-txt-white"></th>
+                <th colspan="2" class="bg-gray-txt-white"></th>
 
+                <th colspan="3" class="bg-gray-txt-white">Servers</th>
+                <th colspan="7" class="bg-gray-txt-white">Cameras</th>
             </tr>
             <tr>
                 <th class="bg-gray-txt-white">
                     Site
-
                 </th>
                 <th class="bg-gray-txt-white">
                     Status
-
                 </th>
                 <th class="bg-green-txt-white">
                     UP
-
                 </th>
                 <th class="bg-red-txt-white">
                     Down
-
                 </th>
                 <th class="bg-gray-txt-white">
                     Unknown
-
                 </th>
                 <th class="bg-green-txt-white">
                     UP
-
                 </th>
                 <th class="bg-red-txt-white">
                     Down
-
                 </th>
                 <th class="bg-gray-txt-white">
                     Unknown
-
                 </th>
-
             </tr>
             </thead>
         </table>
     </section>
-
-
 </main>
 
 
 <script type="text/javascript">
-
 
     function initData() {
         $.getJSON("./data/sites.json", function (data) {
             console.log(data);
             writeTable(data);
             drawChart(data);
-
-
         });
     }
-
-    function writeTable(siteData) {
-
-
-        var tickIcon = function (data, type, row) {
-            if (data == 1) {
-                return '<i class="fa fa-check" style="color:green"/>';
-            }
-            return "";
-        };
-        var noZero = function renderZero(data) {
-            if (data == 0) {
-                return '';
-            }
-            return data;
-        }
-        const oldcolumns =
-            [
-                // {title: "Servers",data:none},
-                //  {title: "Cameras"},
-                {
-                    title: "Site",
-                    data: 'Site'
-                },
-                {title: "Status", data: 'Site-Status', render: tickIcon},
-                {title: "UP", data: "Servers-UP"},
-                {title: "Down", data: "Servers-Down", render: noZero},
-                {title: "Unknown", data: "Servers-Unknown", render: noZero},
-                {title: "Up", data: "Cameras-Up"},
-                {title: "Down", data: "Cameras-Down", render: noZero},
-                {title: "Unknown", data: "Cameras-Unknown", render: noZero}
-            ]
-        const columns = [
-            // {title: "Servers",data:none},
-            //  {title: "Cameras"},
-            {data: 'Site'},
-            {data: 'Site-Status', render: tickIcon},
-            {data: "Servers-UP"},
-            {data: "Servers-Down", render: noZero},
-            {data: "Servers-Unknown", render: noZero},
-            {data: "Cameras-Up"},
-            {data: "Cameras-Down", render: noZero},
-            {data: "Cameras-Unknown", render: noZero}
-        ]
-
-        $('#example').DataTable({
-            // responsive:true,
-            paging: true,
-            filter: true,
-            "orderCellsTop": true,
-            data: siteData,
-            columns
-
-
-        });
-
-
-    }
-
-
-    function drawChart(data) {
-
-        drawSiteChart(data);
-        drawServerChart(data);
-        drawCameraChart(data);
-    }
-
-    $(document).ready(function () {
-        initData();
-
-    });
-
-
-    function drawSiteChart(data) {
-        /*{
-            "SiteId": "003",
-            "Site": "003-Utrecht",
-            "Place": "Utrecht",
-            "Site-Status": "0",
-            "Servers-UP": "4",
-            "Servers-Down": "1",
-            "Servers-Unknown": "0",
-            "Cameras-Up": "4",
-            "Cameras-Down": "2",
-            "Cameras-Unknown": "0"
-        }*/
-       const aggregatedResult = data.reduce((acc,cur)=>{
-            let {up,down} = acc;
-            if(cur['Site-Status']==='0'){
-                down++;
-            }
-            else {
-                up++;
-            }
-            return {up,down}
-
-        }, {up:0,down:0})
-        const items = [
-            {value: aggregatedResult.up, color: "green"},
-            {value: aggregatedResult.down, color: "red"},
-        ]
-
-
-        let imgUrl = "./assets/site.svg";
-        const result = DoughnutElement(items, {
-            radius: 75,
-            title: "Sites",
-            titleColor: "#000000",
-            thicknessSize: "M",
-            gapSize: "L",
-            labelSize: 12,
-            labelColor: "white",
-            backgroundColor: "white",
-            imgUrl
-        });
-        const siteChartContainer = document.getElementById("sites-chart");
-        siteChartContainer.appendChild(result);
-    }
-
-    function drawServerChart(data) {
-        /*{
-            "SiteId": "003",
-            "Site": "003-Utrecht",
-            "Place": "Utrecht",
-            "Site-Status": "0",
-            "Servers-UP": "4",
-            "Servers-Down": "1",
-            "Servers-Unknown": "0",
-            "Cameras-Up": "4",
-            "Cameras-Down": "2",
-            "Cameras-Unknown": "0"
-        }*/
-       const aggregatedResult = data.reduce((acc,cur)=>{
-            let {up,down,unknown} = acc;
-           up+=parseInt(cur['Servers-UP']);
-           down+=parseInt(cur['Servers-Down']);
-           unknown+=parseInt(cur['Servers-Unknown']);
-           console.log({up,down,unknown})
-            return {up,down,unknown}
-
-        }, {up:0,down:0,unknown:0})
-        const items = [
-            {value: aggregatedResult.up, color: "green"},
-            {value: aggregatedResult.down, color: "red"},
-            {value: aggregatedResult.unknown, color: "yellow"},
-        ]
-
-
-        let imgUrl = "./assets/server.svg";
-        const result = DoughnutElement(items, {
-            radius: 75,
-            title: "Servers",
-            titleColor: "#000000",
-            thicknessSize: "M",
-            gapSize: "L",
-            labelSize: 12,
-            labelColor: "white",
-            backgroundColor: "white",
-            imgUrl
-        });
-        const siteChartContainer = document.getElementById("servers-chart");
-        siteChartContainer.appendChild(result);
-    }
-    function drawCameraChart(data) {
-        /*{
-            "SiteId": "003",
-            "Site": "003-Utrecht",
-            "Place": "Utrecht",
-            "Site-Status": "0",
-            "Servers-UP": "4",
-            "Servers-Down": "1",
-            "Servers-Unknown": "0",
-            "Cameras-Up": "4",
-            "Cameras-Down": "2",
-            "Cameras-Unknown": "0"
-        }*/
-       const aggregatedResult = data.reduce((acc,cur)=>{
-            let {up,down,unknown} = acc;
-            up+=parseInt(cur['Cameras-Up']);
-            down+=parseInt(cur['Cameras-Down']);
-            unknown+=parseInt(cur['Cameras-Unknown']);
-            return {up,down,unknown}
-
-        }, {up:0,down:0,unknown:0})
-        const items = [
-            {value: aggregatedResult.up, color: "green"},
-            {value: aggregatedResult.down, color: "red"},
-            {value: aggregatedResult.unknown, color: "yellow"},
-        ]
-
-
-        let imgUrl = "./assets/camera.svg";
-        const result = DoughnutElement(items, {
-            radius: 75,
-            title: "Cameras",
-            titleColor: "#000000",
-            thicknessSize: "M",
-            gapSize: "L",
-            labelSize: 12,
-            labelColor: "white",
-            backgroundColor: "white",
-            imgUrl
-        });
-        const siteChartContainer = document.getElementById("cameras-chart");
-        siteChartContainer.appendChild(result);
-    }
-
 
 </script>
 
