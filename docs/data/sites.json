@@ -1,5 +1,5 @@
-﻿{
-    "Sheet1": [
+﻿
+   [
         {
             "SiteId": "001",
             "Site": "001-The Hague",
@@ -18,11 +18,11 @@
             "Place": "Amsterdam",
             "Site-Status": "1",
             "Servers-UP": "7",
-            "Servers-Down": "0",
-            "Servers-Unknown": "0",
+            "Servers-Down": "700",
+            "Servers-Unknown": "500",
             "Cameras-Up": "2",
-            "Cameras-Down": "0",
-            "Cameras-Unknown": "0"
+            "Cameras-Down": "605",
+            "Cameras-Unknown": "405"
         },
         {
             "SiteId": "003",
@@ -11329,4 +11329,3 @@
             "Cameras-Unknown": "0"
         }
     ]
-}
