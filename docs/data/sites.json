@@ -13,6 +13,18 @@
             "Cameras-Unknown": "0"
         },
         {
+            "SiteId": "002",
+            "Site": "002-Amsterdam",
+            "Place": "Amsterdam",
+            "Site-Status": "1",
+            "Servers-UP": "7",
+            "Servers-Down": "0",
+            "Servers-Unknown": "0",
+            "Cameras-Up": "2",
+            "Cameras-Down": "0",
+            "Cameras-Unknown": "0"
+        },
+        {
             "SiteId": "003",
             "Site": "003-Utrecht",
             "Place": "Utrecht",
@@ -8394,11 +8406,11 @@
             "Place": "Hekendorp",
             "Site-Status": "0",
             "Servers-UP": "1",
-            "Servers-Down": "0",
-            "Servers-Unknown": "0",
-            "Cameras-Up": "8",
-            "Cameras-Down": "0",
-            "Cameras-Unknown": "0"
+            "Servers-Down": "700",
+            "Servers-Unknown": "500",
+            "Cameras-Up": "2",
+            "Cameras-Down": "605",
+            "Cameras-Unknown": "405"
         },
         {
             "SiteId": "702",
@@ -8784,18 +8796,6 @@
             "Cameras-Down": "0",
             "Cameras-Unknown": "0"
         },
-       {
-           "SiteId": "002",
-           "Site": "002-Amsterdam",
-           "Place": "Amsterdam",
-           "Site-Status": "1",
-           "Servers-UP": "7",
-           "Servers-Down": "700",
-           "Servers-Unknown": "500",
-           "Cameras-Up": "2",
-           "Cameras-Down": "605",
-           "Cameras-Unknown": "405"
-       },
         {
             "SiteId": "734",
             "Site": "734-IJzendoorn",
