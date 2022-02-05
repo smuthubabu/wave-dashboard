@@ -1,0 +1,613 @@
+<!doctype html>
+
+
+<!--
+  
+  https://echarts.apache.org/examples/en/index.html#chart-type-graphGL
+
+  https://datatables.net/
+
+-->
+<html lang="en">
+
+<head>
+  <style>
+    .odd {
+      background-color: aqua;
+    }
+
+    .even {
+      background-color: black;
+
+    }
+
+    .body {
+      background-color: #505050
+    }
+
+    .table {
+      background-color: #505050
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.84.0">
+  <title>Wave Dashboard</title>
+  <span class="checkmark">
+    <div class="checkmark_stem"></div>
+    <div class="checkmark_kick"></div>
+  </span>
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
+  <!-- CSS only -->
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.0/dist/echarts.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" />
+  <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body>
+
+  <header>
+
+    <div class="collapse bg-dark" id="navbarHeader">
+      <div class="container" style="visibility: hidden;">
+        <div class="row">
+          <div class="col-sm-8 col-md-7 py-4">
+            <h4 class="text-white">About</h4>
+            <p class="text-muted">Add some information about the album below, the author, or any other background
+              context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off
+              to some social networking sites or contact information.</p>
+          </div>
+          <div class="col-sm-4 offset-md-1 py-4">
+            <h4 class="text-white">Contact</h4>
+            <ul class="list-unstyled">
+              <li><a href="#" class="text-white">Follow on Twitter</a></li>
+              <li><a href="#" class="text-white">Like on Facebook</a></li>
+              <li><a href="#" class="text-white">Email me</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+      <div class="container">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2"
+            viewBox="0 0 24 24">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+            <circle cx="12" cy="13" r="4" />
+          </svg>
+          <strong>Wave Dashboard</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
+          aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="container">
+      <br />
+      <br />
+      <br />
+      <div id="main" style="width: 600px;height:400px;"></div>
+
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <table id="example" class="display" width="100%">
+    </section>
+
+
+  </main>
+
+
+
+
+  <script type="text/javascript">
+
+    function writeTable() {
+
+      $(document).ready(function () {
+
+        var tickIcon = function (data, type, row) {
+          if (data == 1) {
+            return '<i class="fa fa-check" style="color:green"/>';
+          }
+          return "";
+        };
+        var noZero = function renderZero(data) {
+          if (data == 0) {
+            return '';
+          }
+          return data;
+        }
+        $('#example').DataTable({
+          // responsive:true,
+          paging: false,
+          filter: false,
+          "orderCellsTop": true,
+          data: getJsonData(), columns: [
+            // {title: "Servers",data:none},
+            //  {title: "Cameras"},
+            { title: "Site", data: 'Site' },
+            { title: "Status", data: 'Site-Status', render: tickIcon },
+            { title: "UP", data: "Servers-UP" },
+            { title: "Down", data: "Servers-Down", render: noZero },
+            { title: "Unknown", data: "Servers-Unknown", render: noZero },
+            { title: "Up", data: "Cameras-Up" },
+            { title: "Down", data: "Cameras-Down", render: noZero },
+            { title: "Unknown", data: "Cameras-Unknown", render: noZero }
+          ],
+
+        });
+      });
+
+
+    }
+
+    function drawChart() {
+
+      // Initialize the echarts instance based on the prepared dom
+      var myChart = echarts.init(document.getElementById('main'));
+
+      // Specify the configuration items and data for the chart
+      option = {
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          top: '5%',
+          left: 'center'
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: ['20%', '50%'],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '40',
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+              { value: 2, name: 'Down' },
+              { value: 97, name: 'UP' },
+              { value: 1, name: 'Unknown' },
+            ]
+          }
+        ]
+      };
+      // Display the chart using the configuration items and data just specified.
+      myChart.setOption(option);
+
+    }
+    function drawChart() {
+
+      // Initialize the echarts instance based on the prepared dom
+      var myChart = echarts.init(document.getElementById('main'));
+
+      // Specify the configuration items and data for the chart
+      option = {
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          top: '5%',
+          left: 'center'
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: ['20%', '50%'],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '40',
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+              { value: 2, name: 'Down' },
+              { value: 97, name: 'UP' },
+              { value: 1, name: 'Unknown' },
+            ]
+          }
+        ]
+      };
+      // Display the chart using the configuration items and data just specified.
+      myChart.setOption(option);
+
+    }
+
+    $(document).ready(function () {
+      writeTable();
+      drawChart();
+      drawChart1();
+
+    });
+
+    function getJsonData() {
+      var jsonData = [
+        {
+          "SiteId": "001",
+          "Site": "001-The Hague",
+          "Place": "The Hague",
+          "Site-Status": "1",
+          "Servers-UP": "4",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "4",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "002",
+          "Site": "002-Amsterdam",
+          "Place": "Amsterdam",
+          "Site-Status": "1",
+          "Servers-UP": "7",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "2",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "003",
+          "Site": "003-Utrecht",
+          "Place": "Utrecht",
+          "Site-Status": "0",
+          "Servers-UP": "4",
+          "Servers-Down": "1",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "4",
+          "Cameras-Down": "2",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "004",
+          "Site": "004-Rotterdam",
+          "Place": "Rotterdam",
+          "Site-Status": "1",
+          "Servers-UP": "8",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "8",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "005",
+          "Site": "005-Eindhoven",
+          "Place": "Eindhoven",
+          "Site-Status": "1",
+          "Servers-UP": "9",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "4",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "006",
+          "Site": "006-Almere",
+          "Place": "Almere",
+          "Site-Status": "1",
+          "Servers-UP": "5",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "5",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "007",
+          "Site": "007-Groningen",
+          "Place": "Groningen",
+          "Site-Status": "1",
+          "Servers-UP": "4",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "7",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "008",
+          "Site": "008-Breda",
+          "Place": "Breda",
+          "Site-Status": "1",
+          "Servers-UP": "4",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "9",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "009",
+          "Site": "009-Apeldoorn",
+          "Place": "Apeldoorn",
+          "Site-Status": "1",
+          "Servers-UP": "4",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "5",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "010",
+          "Site": "010-Haarlem",
+          "Place": "Haarlem",
+          "Site-Status": "0",
+          "Servers-UP": "7",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "1",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "011",
+          "Site": "011-Zaanstad",
+          "Place": "Zaanstad",
+          "Site-Status": "1",
+          "Servers-UP": "9",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "4",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "012",
+          "Site": "012-Arnhem",
+          "Place": "Arnhem",
+          "Site-Status": "0",
+          "Servers-UP": "3",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "7",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "013",
+          "Site": "013-Hertogenbosch",
+          "Place": "Hertogenbosch",
+          "Site-Status": "0",
+          "Servers-UP": "2",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "7",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "014",
+          "Site": "014-Leeuwarden",
+          "Place": "Leeuwarden",
+          "Site-Status": "1",
+          "Servers-UP": "8",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "2",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "015",
+          "Site": "015-Maastricht",
+          "Place": "Maastricht",
+          "Site-Status": "0",
+          "Servers-UP": "4",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "3",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "016",
+          "Site": "016-Zwolle",
+          "Place": "Zwolle",
+          "Site-Status": "0",
+          "Servers-UP": "8",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "1",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "017",
+          "Site": "017-Alphen aan den Rijn",
+          "Place": "Alphen aan den Rijn",
+          "Site-Status": "1",
+          "Servers-UP": "6",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "2",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "018",
+          "Site": "018-Emmen",
+          "Place": "Emmen",
+          "Site-Status": "1",
+          "Servers-UP": "8",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "6",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "019",
+          "Site": "019-Delft",
+          "Place": "Delft",
+          "Site-Status": "1",
+          "Servers-UP": "7",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "7",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "020",
+          "Site": "020-Deventer",
+          "Place": "Deventer",
+          "Site-Status": "1",
+          "Servers-UP": "4",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "8",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "021",
+          "Site": "021-Hilversum",
+          "Place": "Hilversum",
+          "Site-Status": "0",
+          "Servers-UP": "9",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "4",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "022",
+          "Site": "022-Heerlen",
+          "Place": "Heerlen",
+          "Site-Status": "1",
+          "Servers-UP": "5",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "3",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "023",
+          "Site": "023-Purmerend",
+          "Place": "Purmerend",
+          "Site-Status": "0",
+          "Servers-UP": "7",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "2",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "024",
+          "Site": "024-Lelystad",
+          "Place": "Lelystad",
+          "Site-Status": "1",
+          "Servers-UP": "4",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "3",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "025",
+          "Site": "025-Roosendaal",
+          "Place": "Roosendaal",
+          "Site-Status": "1",
+          "Servers-UP": "3",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "5",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "026",
+          "Site": "026-Spijkenisse",
+          "Place": "Spijkenisse",
+          "Site-Status": "1",
+          "Servers-UP": "3",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "3",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "027",
+          "Site": "027-Ede",
+          "Place": "Ede",
+          "Site-Status": "0",
+          "Servers-UP": "6",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "2",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        },
+        {
+          "SiteId": "028",
+          "Site": "028-Gouda",
+          "Place": "Gouda",
+          "Site-Status": "1",
+          "Servers-UP": "6",
+          "Servers-Down": "0",
+          "Servers-Unknown": "0",
+          "Cameras-Up": "3",
+          "Cameras-Down": "0",
+          "Cameras-Unknown": "0"
+        }
+      ];
+      return jsonData;
+
+
+    }
+
+
+  </script>
+
+
+</body>
+
+</html>
