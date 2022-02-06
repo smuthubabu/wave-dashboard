@@ -13,8 +13,6 @@ function writeTable(siteData) {
         return data;
     }
     const columns = [
-        // {title: "Servers",data:none},
-        //  {title: "Cameras"},
         {data: 'Site'},
         {data: 'Site-Status', render: tickIcon},
         {data: "Servers-UP"},
@@ -29,6 +27,7 @@ function writeTable(siteData) {
         // responsive:true,
         paging: true,
         "iDisplayLength": 50,
+        fixedRowHeight: false,
         filter: true,
         data: siteData,
         columns
@@ -45,35 +44,24 @@ function drawChart(data) {
     drawServerChart(data);
     drawCameraChart(data);
 }
+
 $(document).ready(function () {
     initData();
 
 });
 
 function drawSiteChart(data) {
-    /*{
-        "SiteId": "003",
-        "Site": "003-Utrecht",
-        "Place": "Utrecht",
-        "Site-Status": "0",
-        "Servers-UP": "4",
-        "Servers-Down": "1",
-        "Servers-Unknown": "0",
-        "Cameras-Up": "4",
-        "Cameras-Down": "2",
-        "Cameras-Unknown": "0"
-    }*/
-    const aggregatedResult = data.reduce((acc,cur)=>{
-        let {up,down} = acc;
-        if(cur['Site-Status']==='0'){
+
+    const aggregatedResult = data.reduce((acc, cur) => {
+        let {up, down} = acc;
+        if (cur['Site-Status'] === '0') {
             down++;
-        }
-        else {
+        } else {
             up++;
         }
-        return {up,down}
+        return {up, down}
 
-    }, {up:0,down:0})
+    }, {up: 0, down: 0})
     const items = [
         {value: aggregatedResult.up, color: "green"},
         {value: aggregatedResult.down, color: "red"},
@@ -97,31 +85,19 @@ function drawSiteChart(data) {
 }
 
 function drawServerChart(data) {
-    /*{
-        "SiteId": "003",
-        "Site": "003-Utrecht",
-        "Place": "Utrecht",
-        "Site-Status": "0",
-        "Servers-UP": "4",
-        "Servers-Down": "1",
-        "Servers-Unknown": "0",
-        "Cameras-Up": "4",
-        "Cameras-Down": "2",
-        "Cameras-Unknown": "0"
-    }*/
-    const aggregatedResult = data.reduce((acc,cur)=>{
-        let {up,down,unknown} = acc;
-        up+=parseInt(cur['Servers-UP']);
-        down+=parseInt(cur['Servers-Down']);
-        unknown+=parseInt(cur['Servers-Unknown']);
-        console.log({up,down,unknown})
-        return {up,down,unknown}
+    const aggregatedResult = data.reduce((acc, cur) => {
+        let {up, down, unknown} = acc;
+        up += parseInt(cur['Servers-UP']);
+        down += parseInt(cur['Servers-Down']);
+        unknown += parseInt(cur['Servers-Unknown']);
+        console.log({up, down, unknown})
+        return {up, down, unknown}
 
-    }, {up:0,down:0,unknown:0})
+    }, {up: 0, down: 0, unknown: 0})
     const items = [
         {value: aggregatedResult.up, color: "green"},
         {value: aggregatedResult.down, color: "red"},
-        {value: aggregatedResult.unknown, color: "yellow"},
+        {value: aggregatedResult.unknown, color: "#FF9632"},
     ]
 
 
@@ -140,31 +116,21 @@ function drawServerChart(data) {
     const siteChartContainer = document.getElementById("servers-chart");
     siteChartContainer.appendChild(result);
 }
-function drawCameraChart(data) {
-    /*{
-        "SiteId": "003",
-        "Site": "003-Utrecht",
-        "Place": "Utrecht",
-        "Site-Status": "0",
-        "Servers-UP": "4",
-        "Servers-Down": "1",
-        "Servers-Unknown": "0",
-        "Cameras-Up": "4",
-        "Cameras-Down": "2",
-        "Cameras-Unknown": "0"
-    }*/
-    const aggregatedResult = data.reduce((acc,cur)=>{
-        let {up,down,unknown} = acc;
-        up+=parseInt(cur['Cameras-Up']);
-        down+=parseInt(cur['Cameras-Down']);
-        unknown+=parseInt(cur['Cameras-Unknown']);
-        return {up,down,unknown}
 
-    }, {up:0,down:0,unknown:0})
+function drawCameraChart(data) {
+
+    const aggregatedResult = data.reduce((acc, cur) => {
+        let {up, down, unknown} = acc;
+        up += parseInt(cur['Cameras-Up']);
+        down += parseInt(cur['Cameras-Down']);
+        unknown += parseInt(cur['Cameras-Unknown']);
+        return {up, down, unknown}
+
+    }, {up: 0, down: 0, unknown: 0})
     const items = [
         {value: aggregatedResult.up, color: "green"},
         {value: aggregatedResult.down, color: "red"},
-        {value: aggregatedResult.unknown, color: "yellow"},
+        {value: aggregatedResult.unknown, color: "#FF9632"},
     ]
 
 

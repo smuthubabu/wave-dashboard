@@ -2,11 +2,34 @@
 
 <html lang="en">
 <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Wave Dashboard</title>
+
+    <!-- CSS only -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./js/cropped-doughnut-creator.js"></script>
+    <script type="text/javascript" src="./js/index-code-behind.js"></script>
     <style>
         .dataTables_filter {
             margin-bottom: 20px;
         }
-
+        .dataTables tbody tr {
+            min-height: 90px; /* or whatever height you need to make them all consistent */
+        }
         .navbar-toggler {
             visibility: hidden;
         }
@@ -29,7 +52,7 @@
         }
 
         .bg-green-txt-white {
-            background-color: green;
+            background-color: forestgreen;
             color: white;
         }
 
@@ -42,31 +65,27 @@
             background-color: #495057;
             color: white;
         }
-        th {
-            height: 10px;
+        .bg-unknowngray-txt-white {
+            background-color: gray;
+            color: white;
         }
+        table.dataTable thead th, table.dataTable thead td {
+            padding: 5px 25px;
+            text-align: center;
+
+            font-size: small;
+        }
+        td{
+            padding: 6px 10px;
+            text-align:center;
+            font-size: medium;
+        }
+              td:nth-child(1) {
+                  text-align:left;
+        }
+
+
     </style>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.84.0">
-    <title>Wave Dashboard</title>
-
-    <!-- CSS only -->
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="./js/cropped-doughnut-creator.js"></script>
-    <script type="text/javascript" src="./js/index-code-behind.js"></script>
-
 </head>
 <body>
 <header>
@@ -142,29 +161,24 @@
             <div style="clear:both"></div>
         </div>
 
-        <table class="display" id="example" width="100%">
+        <table class="display" id="example" width="100%" >
             <thead>
-            <tr style="height: 20px">
-                <th colspan="1" class="bg-gray-txt-white"></th>
-                <th colspan="2" class="bg-gray-txt-white"></th>
-
+            <tr>
+                <th colspan="1" rowspan="2" class="bg-gray-txt-white">Site</th>
+                <th rowspan="2" class="bg-gray-txt-white">Status</th>
                 <th colspan="3" class="bg-gray-txt-white">Servers</th>
                 <th colspan="7" class="bg-gray-txt-white">Cameras</th>
             </tr>
             <tr>
-                <th class="bg-gray-txt-white">
-                    Site
-                </th>
-                <th class="bg-gray-txt-white">
-                    Status
-                </th>
+
+
                 <th class="bg-green-txt-white">
                     UP
                 </th>
                 <th class="bg-red-txt-white">
                     Down
                 </th>
-                <th class="bg-gray-txt-white">
+                <th class="bg-unknowngray-txt-white">
                     Unknown
                 </th>
                 <th class="bg-green-txt-white">
@@ -173,7 +187,7 @@
                 <th class="bg-red-txt-white">
                     Down
                 </th>
-                <th class="bg-gray-txt-white">
+                <th class="bg-unknowngray-txt-white">
                     Unknown
                 </th>
             </tr>
