@@ -1,3 +1,6 @@
+
+const {DoughnutElement} = CroppedDoughnutChart
+
 function writeTable(siteData) {
 
     var tickIcon = function (data, type, row) {
