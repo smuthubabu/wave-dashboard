@@ -22,7 +22,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="./js/cropped-doughnut-creator.js"></script>
-    <script type="text/javascript" src="./js/index-code-behind.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
     <style>
         .dataTables_filter {
             margin-bottom: 20px;
@@ -201,9 +201,8 @@
 
     function initData() {
         $.getJSON("./data/sites.json", function (data) {
-            console.log(data);
             writeTable(data);
-            drawChart(data);
+            drawCharts(data);
         });
     }
 
