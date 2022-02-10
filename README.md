@@ -1,5 +1,9 @@
 # wave-dashboard
 
+## Demo 
+
+https://smuthubabu.github.io/wave-dashboard/
+
 
 ## Setup Environment
 
