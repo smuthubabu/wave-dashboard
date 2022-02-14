@@ -231,6 +231,7 @@ function createTitle(label) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.create3deffect = create3deffect;
 exports.createArcAnimation = createArcAnimation;
 exports.createHoverFilter = createHoverFilter;
 exports.createOpacityAnimation = createOpacityAnimation;
@@ -316,6 +317,18 @@ function getCenterTitleAnimation({
 
 
 function createHoverFilter() {
+  const filter = (0, _elements.createElement)("filter", [["id", "glowfilter"], ["filterUnits", "userSpaceOnUse"], ["x", "0"], ["y", "0"], ["width", "100%"], ["height", "100%"]]);
+  const desc = (0, _elements.createElement)("desc", [], "Produces a 3D lighting effect.");
+  filter.appendChild(desc); //<feMorphology operator="dilate" radius="2"/>
+
+  const fegaussianBlur = (0, _elements.createElement)("feMorphology", [["operator", "dilate"], ["radius", "2"]]);
+  filter.appendChild(fegaussianBlur);
+  const defs = (0, _elements.createDefinitionBlock)();
+  defs.appendChild(filter);
+  return defs;
+}
+
+function create3deffect() {
   const filter = (0, _elements.createElement)("filter", [["id", "glowfilter"], ["filterUnits", "userSpaceOnUse"], ["x", "0"], ["y", "0"], ["width", "100%"], ["height", "100%"]]);
   const desc = (0, _elements.createElement)("desc", [], "Produces a 3D lighting effect.");
   filter.appendChild(desc);
@@ -744,7 +757,7 @@ const chartStyles = `
   a:hover .path-container {
     cursor: pointer;
     transition: all 0.5s ease;
-   filter:url(#glowfilter)
+   filter:url(#glowfilter) brightness(1.0);
   }
 
   a:hover text {
@@ -757,10 +770,11 @@ const chartStyles = `
     filter: ;
     cursor: pointer;
   }
-  a .path-container {
-    filter: ;
-    transition: all 0.5s ease;
-  }
+    a .path-container {
+
+      transition: all 0.5s ease;
+      filter: brightness(0.7);
+    }
 
   foreignObject {
     cursor: pointer;
